@@ -1,6 +1,7 @@
 from pymodbus.client import ModbusTcpClient as client
 import struct
 from datetime import datetime
+import os
 
 def convert(lister):
     while(len(lister)<16):
@@ -41,6 +42,7 @@ LS2 = [int(num) for num in bin(request.registers[1])[2:]]
 LS2 = convert(LS2)
 #bit_32= LS1 + LS2
 bit_32_RTL = LS2 + LS1
+PLC.close()
 
 #f = bits_to_float(bit_32)
 #print(f)
@@ -54,4 +56,10 @@ timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
 with open(f'output_{timestamp}.txt','w') as f:
     f.write(str(p))
 
-PLC.close()
+#add file to local got repository
+os.system('git add output_{}.txt'.format(timestamp))
+#commit the changes
+os.system('git commit -m "Added outputfile{}"'.format(timestamp))
+
+#Push changes
+os.system('git push')
