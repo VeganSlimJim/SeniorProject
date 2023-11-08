@@ -58,7 +58,7 @@ with open(f'output_{timestamp}.txt','w') as f:
 
 #add file to local got repository
 os.system('git add output_{}.txt'.format(timestamp))
-#commit the changes
+#commit the changes #These really seem like comments to the file
 os.system('git commit -m "Added outputfile{}"'.format(timestamp))
 
 #Push changes
