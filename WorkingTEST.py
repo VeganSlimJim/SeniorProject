@@ -56,10 +56,10 @@ timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
 with open(f'output_{timestamp}.txt','w') as f:
     f.write(str(p))
 
-#add file to local got repository
-os.system('git add output_{}.txt'.format(timestamp))
-#commit the changes
-os.system('git commit -m "Added outputfile{}"'.format(timestamp))
+# #add file to local got repository
+# os.system('git add output_{}.txt'.format(timestamp))
+# #commit the changes
+# os.system('git commit -m "Added outputfile{}"'.format(timestamp))
 
-#Push changes
-os.system('git push')
+# #Push changes
+# os.system('git push')
