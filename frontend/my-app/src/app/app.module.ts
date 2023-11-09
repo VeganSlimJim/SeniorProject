@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { AgGridModule } from 'ag-grid-angular';
 import { AppComponent } from './app.component';
+import { LineGraphComponent } from './line-graph/line-graph.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AgGridModule,
+    LineGraphComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

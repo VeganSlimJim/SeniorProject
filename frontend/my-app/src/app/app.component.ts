@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
 
+
+interface DataModel{
+  timestamp: String
+  value: Number
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,14 +15,18 @@ import { DataService } from './data.service';
 export class AppComponent {
   title = 'my-app';
   value: String = "";
+  initialDataObject : Array<DataModel> = []
 
   constructor(private dataService: DataService){};
 
-  fetchData(){
-    this.dataService.getDataFromPLC()
+  
+
+  ngOnInit(){
+    this.dataService.getInitialData()
     .subscribe(value =>{
-      this.value = value.data;
-      console.log(this.value);
+      this.initialDataObject = JSON.parse(value);
+      console.log(this.initialDataObject);
     })
+
   }
 }
