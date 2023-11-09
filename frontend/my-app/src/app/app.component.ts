@@ -22,11 +22,7 @@ export class AppComponent {
   
 
   ngOnInit(){
-    this.dataService.getInitialData()
-    .subscribe(value =>{
-      this.initialDataObject = JSON.parse(value);
-      console.log(this.initialDataObject);
-    })
+    
 
   }
 }

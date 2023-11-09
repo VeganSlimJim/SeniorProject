@@ -3,10 +3,7 @@ import { AgChartOptions, time } from 'ag-charts-community';
 import { AgChartsAngular, AgChartsAngularModule } from 'ag-charts-angular';
 import { DataService } from '../data.service';
 
-interface DataModel{
-  timestamp: string
-  value: Number
-}
+
 @Component({
   selector: 'app-line-graph',
   templateUrl: './line-graph.component.html',
