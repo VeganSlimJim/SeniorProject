@@ -3,7 +3,7 @@ import { AgChartOptions, time } from 'ag-charts-community';
 import { AgChartsAngular, AgChartsAngularModule } from 'ag-charts-angular';
 import { DataService } from '../data.service';
 
-
+//Component is standalone to modularize imports
 @Component({
   selector: 'app-line-graph',
   templateUrl: './line-graph.component.html',
@@ -12,20 +12,33 @@ import { DataService } from '../data.service';
   imports: [AgChartsAngularModule]
   
 })
+/**
+ * This class creates our Line Grah Component
+ */
 export class LineGraphComponent {
 
+  //tempData holds the Array of our data
   public tempData: Array<any>;
+
+  //options holds the attributes of the graph
   public options: AgChartOptions;
 
+  //ViewChild essentially watches the graph in order to update it when it changes
   @ViewChild(AgChartsAngular)
   public agChart!: AgChartsAngular;
 
+
+  /**
+   * Constructor for the Line Graph Component
+   * @param dataService - The service that executes our http requests for the graph
+   */
   constructor(private dataService: DataService) {
 
+    //initialize tempdata to an empty array
     this.tempData = []
 
     
-
+    //define the options for the graph
     this.options = {
       autoSize: true,
       data: this.getData(),
@@ -46,6 +59,9 @@ export class LineGraphComponent {
           label: {
             format: '%H:%M:%S',
           },
+          title: {
+            text: "Timestamp"
+          }
         },
         {
           type: 'number',
@@ -53,6 +69,9 @@ export class LineGraphComponent {
           label: {
             format: '#{.2f}Amps',
           },
+          title: {
+            text: "Current"
+          }
         },
       ],
       title: {
