@@ -1,0 +1,5 @@
+fastapi===0.104.1
+uvicorn===0.24.0.post1
+mysql-connector-python===8.1.0
+pymodbus===3.5.4
+pytz===2023.3.post1
