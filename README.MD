@@ -4,7 +4,7 @@ Authors: Matthew, Cameron, Jorge, Kevin
 ## Building and running the Frontend:
 - navigate to the frontend/my-app directory
 - run: `npm install` to install the necessary dependencies (upgrade to yarn incoming)
-- run: `ng serve` , to run the frontend
+- run: `node --max_old_space_size=8048 node_modules/@angular/cli/bin/ng serve` , to run the frontend
 
 ## Building and running the backend
 - navigate to the backend directory
