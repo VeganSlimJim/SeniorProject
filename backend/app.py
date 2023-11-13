@@ -115,6 +115,7 @@ async def getData(response: Response):
     PLC.close()
 
     p = bits_to_float(bit_32_RTL)
+    p=20*(p/100)
 
     #Round the given value to 5 decimal places
     N = 5
