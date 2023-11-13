@@ -94,7 +94,7 @@ async def getData(response: Response):
         timestamp = f"{current_date_and_time.day} {months[current_date_and_time.month - 1]} {current_date_and_time.year} {current_time} CST"
     
 
-    PLC = client(host='192.168.1.239',port=502)
+    PLC = client(host='169.254.7.45',port=502)
     PLC.connect()
     result = PLC.read_coils(8193,5)
     #rr = PLC.read_holding_registers(65536,1)
