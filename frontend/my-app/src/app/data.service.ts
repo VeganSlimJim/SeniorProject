@@ -21,7 +21,7 @@ export class DataService {
     
     //request a reading from the api
     //                                      CHANGE THIS PATH to "/api/data/new" UNLESS TESTING with the "/testapi/data/new" VERSION
-    const data = axios.get(`${vars.base_path}/testapi/data/new`)
+    const data = axios.get(`${vars.base_path}/api/data/new`)
       .then(async (res) =>{
         return await res.data;
       })
