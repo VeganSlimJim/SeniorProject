@@ -24,7 +24,7 @@ def bits_to_float(bits):
 
     return f
 
-PLC = client(host='192.168.1.239',port=502)
+PLC = client(host='169.254.7.45',port=502)
 PLC.connect()
 result = PLC.read_coils(8193,5)
 #rr = PLC.read_holding_registers(65536,1)
