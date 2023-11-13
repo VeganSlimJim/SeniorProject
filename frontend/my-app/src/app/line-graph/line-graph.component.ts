@@ -109,7 +109,7 @@ export class LineGraphComponent {
     options.data = this.getData();
 
     this.options = options;
-    console.log(this.options.data)
+
     
   };
 
@@ -140,22 +140,33 @@ export class LineGraphComponent {
     return this.tempData;
   }
 
+  /**
+   * Build a csv from a data source
+   * @param data - THe array of json objects
+   * @returns - csv data rows joined by a new line
+   */
   buildCSV(data: any){
 
+    //Set the headers of the csv file to be equal to the keys of the json objects
+    //we can replace these with hard coded values as well
     
     const headers = Object.keys(data[0]);
 
+    //replace this line with a string like: current,time,whatever to add the headers as needed
     this.csvRows.push(headers.join(','));
 
+    //add each json entry into the data source
     for(let i=0; i<data.length; i++){
       this.csvRows.push(Object.values(data[i]).join(','));
     }
 
+    //return the csv rows joined by a new line
     return this.csvRows.join('\n');
     
 
   }
 
+  //function that handles the click of the download button
   handleCSVClick(){
 
 
@@ -166,6 +177,10 @@ export class LineGraphComponent {
     
   }
 
+  /**
+   * Handles thee actual download of the csv file
+   * @param data - The data source
+   */
   download(data: any){
     const blob = new Blob([data]);
     
