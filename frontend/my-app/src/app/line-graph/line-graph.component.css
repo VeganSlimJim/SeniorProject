@@ -16,3 +16,11 @@
   #myChart {
     height: 100%;
   }
+
+  .download-btn{
+    z-index: 99;
+    float: right;
+
+  }
+
+  

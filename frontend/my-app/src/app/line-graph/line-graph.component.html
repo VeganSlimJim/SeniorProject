@@ -1,6 +1,12 @@
+<button mat-button class="download-btn" matTooltip="export to csv" (click)="handleCSVClick()">
+    <mat-icon class="download-icon">cloud_download</mat-icon>
+</button>
 <div class="wrapper">
+    
+    
     <ag-charts-angular
         style="height: 100%;"
         [options]="options"
     ></ag-charts-angular>
+
 </div>

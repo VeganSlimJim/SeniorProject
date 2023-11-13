@@ -2,6 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { AgChartOptions, time } from 'ag-charts-community';
 import { AgChartsAngular, AgChartsAngularModule } from 'ag-charts-angular';
 import { DataService } from '../data.service';
+import { MatIconModule } from '@angular/material/icon'
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+
 
 //Component is standalone to modularize imports
 @Component({
@@ -9,7 +13,7 @@ import { DataService } from '../data.service';
   templateUrl: './line-graph.component.html',
   styleUrls: ['./line-graph.component.css'],
   standalone: true,
-  imports: [AgChartsAngularModule]
+  imports: [AgChartsAngularModule, MatIconModule, MatButtonModule, MatTooltipModule]
   
 })
 /**
@@ -19,6 +23,7 @@ export class LineGraphComponent {
 
   //tempData holds the Array of our data
   public tempData: Array<any>;
+  csvRows: Array<any>;
 
   //options holds the attributes of the graph
   public options: AgChartOptions;
@@ -33,6 +38,9 @@ export class LineGraphComponent {
    * @param dataService - The service that executes our http requests for the graph
    */
   constructor(private dataService: DataService) {
+
+    //initialize csvrows data
+    this.csvRows = [];
 
     //initialize tempdata to an empty array
     this.tempData = []
@@ -101,6 +109,7 @@ export class LineGraphComponent {
     options.data = this.getData();
 
     this.options = options;
+    console.log(this.options.data)
     
   };
 
@@ -129,6 +138,47 @@ export class LineGraphComponent {
     
    
     return this.tempData;
+  }
+
+  buildCSV(data: any){
+
+    
+    const headers = Object.keys(data[0]);
+
+    this.csvRows.push(headers.join(','));
+
+    for(let i=0; i<data.length; i++){
+      this.csvRows.push(Object.values(data[i]).join(','));
+    }
+
+    return this.csvRows.join('\n');
+    
+
+  }
+
+  handleCSVClick(){
+
+
+    const data = this.options.data;
+
+    const csvData = this.buildCSV(data);
+    this.download(csvData);
+    
+  }
+
+  download(data: any){
+    const blob = new Blob([data]);
+    
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+
+    a.setAttribute('href', url);
+
+    a.setAttribute('download', 'download.csv');
+
+    a.click();
+
   }
   
 }
