@@ -1,14 +1,14 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, responses
 import mysql.connector
 import random
 from datetime import datetime
 import pytz
 from pymodbus.client import ModbusTcpClient as client
 import struct
-
+import routers.data_router as data_router
 ##Create an API 
 app = FastAPI()
-
+app.include_router(data_router)
 ##defines the mysql connection
 mydb = mysql.connector.connect(
     host="localhost",
