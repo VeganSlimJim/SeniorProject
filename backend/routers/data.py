@@ -1,11 +1,21 @@
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Response, Depends
+from fastapi.security import OAuth2PasswordBearer
+from fastapi.responses import JSONResponse
+import jwt
 import pytz
 import mysql.connector
 import random
 from datetime import datetime
 from pymodbus.client import ModbusTcpClient as client
 import struct
+
+JWT_SECRET='a42d46793ee7d56a31745ae170021cb48f1034932d6cc30f289c655451438b27'
+JWT_ALGORITHM="HS256"
+
 data_router = APIRouter()
+
+#implement oauth2 to protect this endpoint
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -19,11 +29,34 @@ cursor = mydb.cursor()
 #helper array of shorthand months
 months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 
-
-@data_router.get("/new")
-def getTestData(response: Response):
-    response.headers["Access-Control-Allow-Origin"] = "*"
+# route for getting a test value of a plc reading
+@data_router.get("/testnew")
+def getTestData(token: str = Depends(oauth2_scheme)):
     cursor = mydb.cursor()
+
+    try:
+        #decode the payload
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM] )
+        user_id = payload["user_id"]
+        
+        # see if the user exists
+        test_user_sql = f"select * from Users where user_id='{user_id}'"
+        cursor.execute(test_user_sql)
+        res = cursor.fetchall()
+        #if the user does not exist in the database
+        if(len(res) < 1):
+            data = {"Error": "Invalid User"}
+            headers = {"Access-Control-Allow-Origin" : "*"}
+            return JSONResponse(content=data, headers=headers, status_code=401)
+    
+    except Exception as e:
+        data = {
+            "Error": str(e)
+        }
+        headers={"Access-Control-Allow-Origin":"*"}
+        return JSONResponse(content=data, headers=headers, status_code=401)
+    
+    #continue on as planned
 
     central_tz = pytz.timezone("US/Central")
     current_date_and_time= datetime.now(central_tz)
@@ -41,10 +74,12 @@ def getTestData(response: Response):
     sql = "insert into Readings (timestamp, value) values (%s, %s)"
     cursor.execute(sql, record)
     mydb.commit()
-    return {"timestamp" : timestamp, "value": new_value}
+    data = {"timestamp" : timestamp, "value": new_value}
+    headers = {"Access-Control-Allow-Origin": "*"}
+    return JSONResponse(content=data, headers=headers,status_code=200)
 
 #GET route for retrieving a reading from the PLC
-@data_router.get("/api/data/new")
+@data_router.get("/new")
 async def getData(response: Response):
     #Add this response header so we don't get bullied by CORS
     response.headers["Access-Control-Allow-Origin"] = "*"
@@ -119,7 +154,7 @@ async def rootRoute(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     return {"message": "receieved"}
 
-@data_router.get("/api/data/load")
+@data_router.get("/load")
 async def loadInitialData(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     
