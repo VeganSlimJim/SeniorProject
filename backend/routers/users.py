@@ -5,7 +5,7 @@ import mysql.connector
 import random
 from datetime import datetime, timedelta
 import uuid
-from models.users import User, DeletedUser
+from models.users import User, DeletedUser, UpdatedUser
 from models.tokens import JWTTOKEN
 import jwt
 from functions.encryption import encrypt_password, verify_password
@@ -53,8 +53,8 @@ def create_user(user: User, response: JSONResponse):
         timestamp = f"0{current_date_and_time.day} {months[current_date_and_time.month - 1]} {current_date_and_time.year} {current_time} CST"
     else:
         timestamp = f"{current_date_and_time.day} {months[current_date_and_time.month - 1]} {current_date_and_time.year} {current_time} CST"
+    
     #uuid creation
-
     user.user_id = str(uuid.uuid4())
     user.creation_date = timestamp
 
@@ -79,23 +79,24 @@ def create_user(user: User, response: JSONResponse):
     
 
 @user_router.delete("/delete")
-def delete_user(user: DeletedUser, response: JSONResponse):
-    
-    sql = f"select * from Users where email='{user.email}'"
+def delete_user(token: JWTTOKEN, response: JSONResponse):
+    decoded_jwt = jwt.decode(token.token, key=JWT_SECRET, algorithms=[JWT_ALGORITHM])
+    user_id = decoded_jwt["user_id"]
+    print(user_id)
+    sql = f"select * from Users where user_id='{user_id}'"
     cursor.execute(sql)
 
     res = cursor.fetchall()
 
     if(len(res) < 1):
         data = {
-            "Error": "No record found for that email"
+            "Error": "No record found for the given user"
         }
         headers = {"Access-Control-Allow-Origin": "*"}
         return JSONResponse(content=data, headers=headers, status_code=404)
     
-    user_id = res[0][0]
+    
     try:
-
         delete_sql = f"delete from Users where user_id='{user_id}'"
         cursor.execute(delete_sql)
         mydb.commit()
@@ -113,11 +114,42 @@ def delete_user(user: DeletedUser, response: JSONResponse):
 
 
 @user_router.put("/update")
-def update_user(token: JWTTOKEN):
-    decoded_jwt = jwt.decode(token.token, key=JWT_SECRET, algorithms=[JWT_ALGORITHM])
-    print(decoded_jwt)
+def update_user(user: UpdatedUser):
+    
+    #hold the decoded jwt for where clause purposes
+    decoded_jwt = jwt.decode(user.token, key=JWT_SECRET, algorithms=[JWT_ALGORITHM])
+    user_id = decoded_jwt["user_id"]
+    sql = f"select * from Users where user_id='{user_id}'"
 
-    # sql = f"select * from Users where user_id='{user.user_id}'"
+    cursor.execute(sql)
+    res = cursor.fetchall()
+
+    if(len(res) < 1):
+        data = {
+            "Error": "No record found for the given user"
+        }
+        headers = {"Access-Control-Allow-Origin": "*"}
+        return JSONResponse(content=data, headers=headers, status_code=404)
+    
+    try:
+
+        # hash the password again
+        hashed_pw = encrypt_password(user.password)
+        update_sql = f"update Users set first_name='{user.first_name}',last_name='{user.last_name}',password='{hashed_pw}',email='{user.email}' where user_id='{user_id}'"
+        cursor.execute(update_sql)
+        mydb.commit()
+        data = {"Success!": "Record successfully updated"}
+        headers = {"Access-Control-Allow-Origin": "*"}
+        return JSONResponse(content=data,headers=headers, status_code=200)
+
+    #if something goes wrong during the delete
+    except Exception as e:
+        data = {
+            "Error": str(e)
+        }
+        headers = {"Access-Control-Allow-Origin": "*"}
+        return JSONResponse(content=data, headers=headers, status_code=400)
+
         
 
 

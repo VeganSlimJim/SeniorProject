@@ -11,3 +11,11 @@ class User(BaseModel):
 
 class DeletedUser(BaseModel):
     email: str
+
+class UpdatedUser(BaseModel):
+    token: str
+    email: str
+    password: str
+    first_name: str
+    last_name: str
+    creation_date: Optional[str] = Field(None, alias="creation_date")
