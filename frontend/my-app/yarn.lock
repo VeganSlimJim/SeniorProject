@@ -254,6 +254,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular/flex-layout@npm:^15.0.0-beta.42":
+  version: 15.0.0-beta.42
+  resolution: "@angular/flex-layout@npm:15.0.0-beta.42"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/cdk": ">=15.0.0"
+    "@angular/common": ">=15.0.2"
+    "@angular/core": ">=15.0.2"
+    "@angular/platform-browser": ">=15.0.2"
+    rxjs: ^6.5.3 || ^7.4.0
+  checksum: adf8479383de8dc0873130521a23fc34c732444b2ab37e2937ad2c451cb8b4d473600a30c5625aeb0b61fb63f45a91f5e970b998aca5859c267a27f5fe2f9bdc
+  languageName: node
+  linkType: hard
+
 "@angular/forms@npm:^17.0.3":
   version: 17.0.3
   resolution: "@angular/forms@npm:17.0.3"
@@ -7289,6 +7304,7 @@ __metadata:
     "@angular/compiler": "npm:^17.0.3"
     "@angular/compiler-cli": "npm:^17.0.3"
     "@angular/core": "npm:^17.0.3"
+    "@angular/flex-layout": "npm:^15.0.0-beta.42"
     "@angular/forms": "npm:^17.0.3"
     "@angular/material": "npm:^17.0.1"
     "@angular/platform-browser": "npm:^17.0.3"

@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Response
 import pytz
 import mysql.connector
-router = APIRouter(
-    prefix="/v1/data",
-    tags= "data"
-)
+import random
+from datetime import datetime
+data_router = APIRouter()
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -19,7 +18,7 @@ cursor = mydb.cursor()
 months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 
 
-@router.get("/testapi/data/new")
+@data_router.get("/new")
 def getTestData(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     cursor = mydb.cursor()

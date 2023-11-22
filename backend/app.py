@@ -1,14 +1,16 @@
-from fastapi import FastAPI, responses
+from fastapi import FastAPI, Response
 import mysql.connector
 import random
 from datetime import datetime
 import pytz
 from pymodbus.client import ModbusTcpClient as client
 import struct
-import routers.data_router as data_router
+from routers.users import user_router
+from routers.data import data_router
 ##Create an API 
 app = FastAPI()
-app.include_router(data_router)
+app.include_router(data_router, prefix="/api/v1/data")
+app.include_router(user_router, prefix="/api/v1/users")
 ##defines the mysql connection
 mydb = mysql.connector.connect(
     host="localhost",
@@ -157,6 +159,7 @@ async def loadInitialData(response: Response):
 
     results = cursor.fetchall()
     return results
+
 
 
 #https://github.com/VeganSlimJim/SeniorProject.git

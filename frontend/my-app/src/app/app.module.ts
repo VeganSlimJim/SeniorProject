@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { LineGraphComponent } from './line-graph/line-graph.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { LoginpageComponent } from './loginpage/loginpage.component';
+import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +17,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     AgGridModule,
     LineGraphComponent,
     BrowserAnimationsModule,
-    NavbarComponent
+    NavbarComponent,
+    LoginpageComponent,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
