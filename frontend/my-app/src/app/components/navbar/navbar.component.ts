@@ -1,17 +1,25 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon'
 import {MatButtonModule} from '@angular/material/button'
 import {MatToolbarModule} from '@angular/material/toolbar'
 import {MatMenuModule} from '@angular/material/menu'
 import { MatSidenavModule} from '@angular/material/sidenav'
 import {MatCheckboxModule} from '@angular/material/checkbox'
-import { SidenavStatusService } from '../sidenav-status.service';
+import { SidenavStatusService } from '../../services/sidenav-status/sidenav-status.service';
+import { AppRoutingModule } from '../../app-routing.module';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatSidenavModule, MatCheckboxModule]
+  imports: [
+    MatIconModule, 
+    MatButtonModule, 
+    MatToolbarModule, 
+    MatMenuModule, 
+    MatSidenavModule, 
+    MatCheckboxModule,
+    AppRoutingModule]
 })
 export class NavbarComponent {
   currval: any;

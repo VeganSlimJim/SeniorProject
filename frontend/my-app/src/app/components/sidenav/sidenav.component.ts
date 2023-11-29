@@ -1,13 +1,17 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { AppRoutingModule } from '../app-routing.module';
+import { AppRoutingModule } from '../../app-routing.module';
 import { MatCardModule } from '@angular/material/card';
-import { SidenavStatusService } from '../sidenav-status.service';
+import { SidenavStatusService } from '../../services/sidenav-status/sidenav-status.service';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, AppRoutingModule, MatCardModule],
+  imports: [
+    CommonModule, 
+    MatSidenavModule, 
+    AppRoutingModule, 
+    MatCardModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css'
 })

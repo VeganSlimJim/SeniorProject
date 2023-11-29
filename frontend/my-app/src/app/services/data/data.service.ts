@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Observable,from } from 'rxjs';
-import vars from '../../vars.json';
+import vars from '../../../../vars.json';
 
 
 //mark this class as injectable so it can be injected as a dependancy elsewhere

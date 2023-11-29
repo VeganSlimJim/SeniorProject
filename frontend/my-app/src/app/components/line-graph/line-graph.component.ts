@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { AgChartOptions, time } from 'ag-charts-community';
 import { AgChartsAngular, AgChartsAngularModule } from 'ag-charts-angular';
-import { DataService } from '../data.service';
+import { DataService } from '../../services/data/data.service';
 import { MatIconModule } from '@angular/material/icon'
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';

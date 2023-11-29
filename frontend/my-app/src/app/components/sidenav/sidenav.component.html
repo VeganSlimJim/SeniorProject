@@ -20,7 +20,7 @@
             padding: 12px 24px;
             transition: background-color 0.3s ease;
             "
-            ><a style="text-decoration: none; color: #333;" [routerLink]="['/reporting']" class="sidenav-link">Reporting</a></li> 
+            ><a style="text-decoration: none; color: #333;" [routerLink]="['/reporting']" class="sidenav-link" (click)="toggleStatus()">Reporting</a></li> 
             <li
             style="
             list-style: none;
@@ -28,7 +28,7 @@
             padding: 12px 24px;
             transition: background-color 0.3s ease;
             "
-            ><a style="text-decoration: none; color: #333;" [routerLink]="['/dashboard']" class="sidenav-link">Dashboard</a></li> 
+            ><a style="text-decoration: none; color: #333;" [routerLink]="['/dashboard']" class="sidenav-link" (click)="toggleStatus()">Dashboard</a></li> 
             </ul>
     </mat-sidenav>
     <mat-sidenav-content>

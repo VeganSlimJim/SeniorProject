@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { LoginpageComponent } from "./loginpage/loginpage.component";
-import { LineGraphComponent } from "./line-graph/line-graph.component";
-import { NavbarComponent } from "./navbar/navbar.component";
-import { ReportingComponent } from "./reporting/reporting.component";
+import { LoginpageComponent } from "./components/loginpage/loginpage.component";
+import { LineGraphComponent } from "./components/line-graph/line-graph.component";
+import { NavbarComponent } from "./components/navbar/navbar.component";
+import { ReportingComponent } from "./components/reporting/reporting.component";
 const routes: Routes = [
     {path: 'login', component: LoginpageComponent},
     {path: 'dashboard', component: LineGraphComponent},

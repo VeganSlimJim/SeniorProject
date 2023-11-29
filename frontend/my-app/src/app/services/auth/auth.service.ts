@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Observable, from } from 'rxjs';
-import vars from '../../vars.json'
+import vars from '../../../../vars.json'
 
 @Injectable({
   providedIn: 'root'

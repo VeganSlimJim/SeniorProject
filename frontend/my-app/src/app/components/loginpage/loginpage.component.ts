@@ -6,10 +6,10 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, A
 import {MatInputModule} from '@angular/material/input'
 import {MatCardModule} from '@angular/material/card'
 import {FlexLayoutModule} from '@angular/flex-layout'
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { RouterService } from '../router.service';
+import { RouterService } from '../../services/router/router.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 interface Token {
   token: string

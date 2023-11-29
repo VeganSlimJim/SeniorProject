@@ -5,7 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule,FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { DataService } from 'src/app/services/data/data.service';
+import { FormsModule, ReactiveFormsModule,FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'app-reporting',
   standalone: true,
@@ -28,7 +29,11 @@ export class ReportingComponent {
     Validators.required
   ])
 
-  constructor(){};
+  constructor(private dataService: DataService){};
 
-  handleReportingFormSubmit(){}
+  handleReportingFormSubmit(){
+
+    
+
+  }
 }

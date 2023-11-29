@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { DataService } from './data.service';
-import { RouterService } from './router.service';
+import { DataService } from './services/data/data.service';
+import { RouterService } from './services/router/router.service';
 import {Router} from '@angular/router'
-import { SidenavStatusService } from './sidenav-status.service';
+import { SidenavStatusService } from './services/sidenav-status/sidenav-status.service';
 //The interface for our JSON objects
 interface DataModel{
   timestamp: String
