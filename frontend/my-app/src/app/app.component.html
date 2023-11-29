@@ -1,6 +1,7 @@
 <div>
-  <app-navbar></app-navbar>
   
+  <app-navbar *ngIf="router !='/login'" (sideNavToggle)="toggleSidenav()"></app-navbar>
+  <app-sidenav [opened]="sideNavOpened" (sideNavToggle)="toggleSidenav()"></app-sidenav>
   <!-- <app-line-graph></app-line-graph> -->
-  <router-outlet></router-outlet>
+  
 </div>

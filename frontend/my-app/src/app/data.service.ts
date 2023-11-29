@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Observable,from } from 'rxjs';
 import vars from '../../vars.json';
 
+
 //mark this class as injectable so it can be injected as a dependancy elsewhere
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,15 @@ export class DataService {
    * Gets a reading from the PLC
    * @returns - an observable of the json object of our data
    */
-  getDataFromPLC() : Observable<any> {
-    
+  getDataFromPLC(token: string) : Observable<any> {
+    const headers = {
+      "Authorization": `Bearer ${token}`
+    }
     //request a reading from the api
     //                                      CHANGE THIS PATH to "/api/data/new" UNLESS TESTING with the "/testapi/data/new" VERSION
-    const data = axios.get(`${vars.base_path}/api/data/new`)
+    const data = axios.get(`${vars.base_path}/api/v1/data/testnew`, {
+      headers: headers
+    })
       .then(async (res) =>{
         return await res.data;
       })

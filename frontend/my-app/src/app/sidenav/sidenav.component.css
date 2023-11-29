@@ -1,0 +1,12 @@
+
+
+
+.sidenav-container{
+    height: 90vh;
+    width: 100%;
+  
+}
+
+.sidenav-link:hover{
+    cursor: pointer;
+}

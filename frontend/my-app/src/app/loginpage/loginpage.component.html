@@ -7,17 +7,23 @@
         <mat-card-header><mat-card-title>Login</mat-card-title></mat-card-header>
         <mat-card-content>
             <form
-                [formGroup]="loginForm"
                 fxLayout="column"
                 fxLayoutAlign="center stretch"
             >
             <mat-form-field>
-                <mat-label>Username</mat-label>
-                <input matInput formControlName="username" />
+                <mat-label>Email</mat-label>
+                <input matInput [formControl]="email" type="email" />
+                @if(email.hasError('email') && !email.hasError('required')) {
+                    <mat-error>Please enter a valid email address</mat-error>
+                }
+                @if(email.hasError('required')) {
+                    <mat-error>Email is <strong>required</strong></mat-error>
+                }
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password">
+                <input matInput [formControl]="password" type="password" >
+                <mat-error>Password is <strong>required</strong></mat-error>
             </mat-form-field>
         </form>
         </mat-card-content>

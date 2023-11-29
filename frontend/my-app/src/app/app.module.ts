@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidenavComponent } from './sidenav/sidenav.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,9 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
     NavbarComponent,
     LoginpageComponent,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSidenavModule,
+    SidenavComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

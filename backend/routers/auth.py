@@ -20,8 +20,9 @@ cursor = mydb.cursor()
 
 @auth_router.post("/login")
 def login(user: UserLogin):
-
+    print(user)
     #check for valid login
+    print(user.email)
     sql = f"select * from Users where email='{user.email}'"
     cursor.execute(sql)
 

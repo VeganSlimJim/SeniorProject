@@ -5,8 +5,8 @@ import { DataService } from '../data.service';
 import { MatIconModule } from '@angular/material/icon'
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-
-
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 //Component is standalone to modularize imports
 @Component({
   selector: 'app-line-graph',
@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
  * This class creates our Line Grah Component
  */
 export class LineGraphComponent {
+  public cookieValue: string
 
   //tempData holds the Array of our data
   public tempData: Array<any>;
@@ -37,8 +38,9 @@ export class LineGraphComponent {
    * Constructor for the Line Graph Component
    * @param dataService - The service that executes our http requests for the graph
    */
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private cookieService: CookieService, private router: Router) {
 
+    this.cookieValue = "";
     //initialize csvrows data
     this.csvRows = [];
 
@@ -91,16 +93,21 @@ export class LineGraphComponent {
 
 
   ngOnInit() {
-    this.dataService.getInitialData()
-    .subscribe(value =>{
-      var temp: Array<any> = JSON.parse(value);
-      this.tempData = temp.filter(function(el, index) {
-        return index >= temp.length - 10;
-      })
+    // this.dataService.getInitialData()
+    // .subscribe(value =>{
+    //   var temp: Array<any> = JSON.parse(value);
+    //   this.tempData = temp.filter(function(el, index) {
+    //     return index >= temp.length - 10;
+    //   })
       
   
-    })
-    this.startUpdates();
+    // })
+    this. cookieValue = this.cookieService.get('token');
+    console.log(this.cookieValue);
+    if(!this.cookieValue){
+      this.router.navigate(['/login'])
+    }
+    // this.startUpdates();
   }
 
   update = () => {
@@ -126,14 +133,14 @@ export class LineGraphComponent {
       this.tempData.shift();
     }
 
-    this.dataService.getDataFromPLC()
-      .subscribe(value =>{
-        this.tempData.push({
-          time: new Date(value.timestamp),
-          current: value.value,
+    // this.dataService.getDataFromPLC(this.cookieValue)
+    //   .subscribe(value =>{
+    //     this.tempData.push({
+    //       time: new Date(value.timestamp),
+    //       current: value.value,
           
-        })
-      })
+    //     })
+    //   })
    
     
    

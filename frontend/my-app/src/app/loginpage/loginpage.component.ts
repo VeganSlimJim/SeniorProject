@@ -2,11 +2,25 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, FormGroupDirective, NgForm } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input'
 import {MatCardModule} from '@angular/material/card'
 import {FlexLayoutModule} from '@angular/flex-layout'
+import { AuthService } from '../auth.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { RouterService } from '../router.service';
+import { ErrorStateMatcher } from '@angular/material/core';
+interface Token {
+  token: string
+}
 
+export class MyErroStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: AbstractControl<any, any> | null, form: FormGroupDirective | NgForm | null): boolean {
+      const isSubmitted = form && form.submitted;
+      return !!(control && control.invalid && (control.dirty || isSubmitted));
+  }
+}
 @Component({
   selector: 'app-loginpage',
   standalone: true,
@@ -15,22 +29,42 @@ import {FlexLayoutModule} from '@angular/flex-layout'
   styleUrl: './loginpage.component.css'
 })
 export class LoginpageComponent {
-  username: string = ""
-  password: string = ""
   show: boolean = false;
-  public loginForm!: FormGroup;
+  router_url : string;
+  matcher = new MyErroStateMatcher();
+  email = new FormControl('', [
+    Validators.required, Validators.email
+  ]);
+  password = new FormControl('', [
+    Validators.required
+  ])
 
-  constructor(){}
+  constructor(private authService: AuthService, private cookieService: CookieService, private router: Router, private routerService: RouterService){
+    this.router_url = router.url;
+    this.routerService.setRouterUrl(this.router_url);
+    
+  }
 
   ngOnInit(){
-    this.loginForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
-    })
+    if(this.cookieService.get('token')){
+      this.router.navigate(["/dashboard"])
+    }
   }
 
   handleLoginFormSubmit(){
-    console.log(`Username: ${this.username}, password: ${this.password}`)
+  
+    this.authService.login(this.email.value!, this.password.value!)
+      .subscribe((value : Token) =>{
+        this.cookieService.set('token', value.token);
+        this.router.navigate(['/dashboard']);
+      })
+      
+    console.log("im here");
+    
+    
+    
+    
+    
   }
 
 }
