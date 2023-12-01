@@ -7,6 +7,7 @@ import mysql.connector
 import random
 from datetime import datetime
 from pymodbus.client import ModbusTcpClient as client
+from models.data import ReportReading
 import struct
 
 JWT_SECRET='a42d46793ee7d56a31745ae170021cb48f1034932d6cc30f289c655451438b27'
@@ -137,14 +138,58 @@ async def getData(response: Response):
     #Return the json
     return {"timestamp" : timestamp, "value": new_value}
 
+# route for getting a test value of a plc reading
+@data_router.post("/testnewreportreading")
+def getTestDataForReport(data_payload: ReportReading, token: str = Depends(oauth2_scheme)):
+    cursor = mydb.cursor()
+    phase = data_payload.phase
 
+    try:
+        #decode the payload
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM] )
+        user_id = payload["user_id"]
+        
+        # see if the user exists
+        test_user_sql = f"select * from Users where user_id='{user_id}'"
+        cursor.execute(test_user_sql)
+        res = cursor.fetchall()
+        #if the user does not exist in the database
+        if(len(res) < 1):
+            data = {"Error": "Invalid User"}
+            headers = {"Access-Control-Allow-Origin" : "*"}
+            return JSONResponse(content=data, headers=headers, status_code=401)
     
-
-
+    except Exception as e:
+        data = {
+            "Error": str(e)
+        }
+        headers={"Access-Control-Allow-Origin":"*"}
+        return JSONResponse(content=data, headers=headers, status_code=401)
     
+    #continue on as planned
 
-
-
+    central_tz = pytz.timezone("US/Central")
+    current_date_and_time= datetime.now(central_tz)
+    current_time = current_date_and_time.strftime("%H:%M:%S")
+    timestamp = ""
+    if(current_date_and_time.day < 10):
+        timestamp = f"0{current_date_and_time.day} {months[current_date_and_time.month - 1]} {current_date_and_time.year} {current_time} CST"
+    else:
+        timestamp = f"{current_date_and_time.day} {months[current_date_and_time.month - 1]} {current_date_and_time.year} {current_time} CST"
+    
+    N = 5
+    rand_amps = round(random.uniform(10,20), N)
+    
+    
+    #Calculate the equivalent value using the function
+    kw_capacity_reading = kw_capacity(int(phase), rand_amps)
+    record = (timestamp, rand_amps, phase, kw_capacity_reading)
+    sql = "insert into ReportReadings (timestamp, amps, phase, kw_capacity) values (%s, %s, %s, %s)"
+    cursor.execute(sql, record)
+    mydb.commit()
+    data = {"timestamp" : timestamp, "value": rand_amps, "phase": phase, "kw_capacity_reading": kw_capacity_reading}
+    headers = {"Access-Control-Allow-Origin": "*"}
+    return JSONResponse(content=data, headers=headers,status_code=200)
 
 
 
@@ -188,3 +233,36 @@ def bits_to_float(bits):
     f = struct.unpack('>f', packed)[0]
 
     return f
+
+def kw_capacity(phase, amps):
+    # Define a dictionary to store multipliers for each condition
+    multipliers = {1: 120, 2: 208, 3: 360}
+    
+    # Check if B5 is one of the keys in the dictionary
+    # If yes, calculate the result using the corresponding multiplier
+    # If not, default to 0
+    result = multipliers.get(phase, 0) * amps
+    
+    # Divide the result by 1000
+    return result / 1000
+
+
+def kw_reading(phase, live):
+    # Define a dictionary to store multipliers for each condition
+    multipliers = {1: 120, 2: 208, 3: 360}
+    
+    # Check if B5 is one of the keys in the dictionary
+    # If yes, calculate the result using the corresponding multiplier
+    # If not, default to 0
+    result2 = multipliers.get(phase,0) * live
+    
+    # Divide the result by 1000
+    return result2 / 1000
+
+
+        
+                
+        
+
+# if __name__ == "__main__":
+#     main()

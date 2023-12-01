@@ -11,3 +11,10 @@ create table Users(
     last_name varchar(255),
     creation_date varchar(255)
 );
+
+create table ReportReadings(
+    timestamp varchar(255),
+    amps varchar(255),
+    phase varchar(255),
+    kw_capacity varchar(255)
+);
