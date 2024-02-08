@@ -30,6 +30,7 @@ export class MyErroStateMatcher implements ErrorStateMatcher {
 })
 export class LoginpageComponent {
   show: boolean = false;
+  invalidLogin: boolean = false;
   router_url : string;
   matcher = new MyErroStateMatcher();
   email = new FormControl('', [
@@ -55,11 +56,18 @@ export class LoginpageComponent {
   
     this.authService.login(this.email.value!, this.password.value!)
       .subscribe((value : Token) =>{
-        this.cookieService.set('token', value.token);
-        this.router.navigate(['/dashboard']);
+        
+        try{
+          this.invalidLogin = false;
+          this.cookieService.set('token', value.token);
+          this.router.navigate(['/dashboard']);
+        }catch(error){
+          this.invalidLogin = true;
+        }
+        
       })
       
-    console.log("im here");
+    
     
     
     

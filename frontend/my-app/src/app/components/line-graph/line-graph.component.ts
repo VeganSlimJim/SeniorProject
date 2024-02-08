@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon'
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { CookieService } from 'ngx-cookie-service';
+import { RouterService } from 'src/app/services/router/router.service';
 import { Router } from '@angular/router';
 //Component is standalone to modularize imports
 @Component({
@@ -38,7 +39,13 @@ export class LineGraphComponent {
    * Constructor for the Line Graph Component
    * @param dataService - The service that executes our http requests for the graph
    */
-  constructor(private dataService: DataService, private cookieService: CookieService, private router: Router) {
+  constructor(private dataService: DataService, 
+    private cookieService: CookieService, 
+    private router: Router,
+    private routerService: RouterService
+    ) {
+
+      this.routerService.setRouterUrl(this.router.url);
 
     this.cookieValue = "";
     //initialize csvrows data

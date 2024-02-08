@@ -23,10 +23,14 @@ export class AuthService {
     const data = axios.post(`${vars.base_path}/api/v1/auth/login`, payload)
       .then(async (res) =>{
         if(res.status !== 200){
-          
+          console.log("in the return");
           return null;
         }
+        console.log("made it here somehow");
         return await res.data
+      }).catch(error =>{
+        console.log("erroreed out");
+        return null;
       })
       
       return from(data);
