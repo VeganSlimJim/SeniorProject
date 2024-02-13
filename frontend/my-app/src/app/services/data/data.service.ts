@@ -71,4 +71,17 @@ export class DataService {
       //return the observable
       return from(data);
   }
+
+  getPanels(): Observable<any>{
+
+    const data = axios.get(`${vars.base_path}/api/v1/data/panels/get`)
+
+    .then(async (res) =>{
+
+      return await res.data;
+
+    })
+    //return the observable
+    return from(data);
+  }
 }

@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DataService } from 'src/app/services/data/data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule,FormControl, Validators} from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select'
 
 interface Report{
   timestamp: string | null,
@@ -26,7 +27,8 @@ interface Report{
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   templateUrl: './reporting.component.html',
   styleUrl: './reporting.component.css'
@@ -35,6 +37,10 @@ export class ReportingComponent {
   curr_report_values: Report;
   csvRows: Array<any>;
   phase: FormControl;
+
+  panel: any;
+
+  panelList: Array<any>;
 
   
 
@@ -46,11 +52,36 @@ export class ReportingComponent {
       kw_capacity: null,
     };
 
+    this.panelList = [];
+
+    
+
+
     this.csvRows = [];
     this.phase = new FormControl('', [
       Validators.required
     ])
   };
+
+  ngOnInit(){
+
+    this.dataService.getPanels()
+      .subscribe(value =>{
+        this.panelList = [].concat(...value['data']);
+        console.log(this.panelList);
+        
+      })
+
+  }
+
+  onDropdownChange(value: any){
+
+    this.panel = parseInt(value);
+    console.log(this.panel);
+  
+    
+
+  }
 
   handleReportingFormSubmit(){
     const token = this.cookieService.get('token');

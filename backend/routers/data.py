@@ -199,6 +199,40 @@ async def rootRoute(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     return {"message": "receieved"}
 
+@data_router.get("/panels/get")
+async def getPanels(response: JSONResponse):
+
+
+    try:
+
+        cursor = mydb.cursor()
+
+        sql = "select name from Panels"
+
+        cursor.execute(sql)
+
+        res = cursor.fetchall()
+        
+
+        headers = {"Access-Control-Allow-Origin":  "*"}
+        data = {
+            "data": res 
+        }
+
+        return JSONResponse(content=data, headers=headers, status_code=200)
+    
+    except Exception as e:
+        headers = {"Access-Control-Allow-Origin":  "*"}
+
+        data = {
+            "Error": str(e)
+        }
+
+        return JSONResponse(content=data, headers=headers, status_code=400)
+
+
+
+
 @data_router.get("/load")
 async def loadInitialData(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"

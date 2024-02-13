@@ -18,3 +18,9 @@ create table ReportReadings(
     phase varchar(255),
     kw_capacity varchar(255)
 );
+
+create table Panels(
+    name varchar(255),
+    time_of_reading varchar(255),
+    
+);
