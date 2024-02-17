@@ -1,36 +1,27 @@
-
-
-<div
-    class="auth-card-container"
-    fxLayout="column"
-    fxLayoutAlign="center"
->
-    <mat-card class="auth-card">
-        <mat-card-header style="font-size: xx-large;"><mat-card-title>Panel form</mat-card-title></mat-card-header>
-        <mat-card-content>
-            <form
-                fxLayout="column"
-                fxLayoutAlign="center stretch"
-            >
-        
-
-            <mat-form-field style="width: 30%;">
-            <mat-label>Panel</mat-label>
-            <mat-select (selectionChange)="onDropdownChange($event.value)">
-                @for(item of panelList; track item){
-                    <mat-option [value]="item">{{item}}</mat-option>
-                }
-            </mat-select>
-            </mat-form-field>
-            
-        </form>
-        </mat-card-content>
-        <mat-card-actions>
-            <button class="form-btn" mat-raised-button color="warn">
-            Cancel
-            </button>
-
-            <button mat-raised-button color="primary">Edit</button>
-        </mat-card-actions>
-    </mat-card>
+<div class="auth-card-container" fxLayout="column" fxLayoutAlign="center">
+  <mat-card class="auth-card">
+    <mat-card-header style="font-size: xx-large"
+      ><mat-card-title>Panel form</mat-card-title></mat-card-header
+    >
+    <mat-card-content>
+      <form fxLayout="column" fxLayoutAlign="center stretch">
+        <mat-form-field style="width: 30%">
+          <mat-label>Panel</mat-label>
+          <mat-select (selectionChange)="onDropdownChange($event.value)">
+            @for(item of panelList; track item){
+            <mat-option [value]="item">{{ item }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onEditClick()">
+        Edit
+      </button>
+    </mat-card-actions>
+    <p style="margin-left: 1%" *ngIf="lastEdited.length > 0">
+      Last edited: {{ lastEdited }}
+    </p>
+  </mat-card>
 </div>

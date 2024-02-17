@@ -7,7 +7,7 @@ import mysql.connector
 import random
 from datetime import datetime
 from pymodbus.client import ModbusTcpClient as client
-from models.data import ReportReading
+from models.data import ReportReading, Panel, PanelPost
 import struct
 
 JWT_SECRET='a42d46793ee7d56a31745ae170021cb48f1034932d6cc30f289c655451438b27'
@@ -212,12 +212,17 @@ async def getPanels(response: JSONResponse):
         cursor.execute(sql)
 
         res = cursor.fetchall()
+
         
+
+        res = [[i[0]] for i in res]
+        print(res)
 
         headers = {"Access-Control-Allow-Origin":  "*"}
         data = {
             "data": res 
         }
+        cursor.close()
 
         return JSONResponse(content=data, headers=headers, status_code=200)
     
@@ -227,9 +232,97 @@ async def getPanels(response: JSONResponse):
         data = {
             "Error": str(e)
         }
+        cursor.close()
 
         return JSONResponse(content=data, headers=headers, status_code=400)
 
+@data_router.post("/panels/getOne")
+async def getOnePanel(payload: Panel, response: Response):
+    cursor = mydb.cursor(dictionary=True)
+
+    panel_number = payload.panel_number
+  
+    sql = f"select time_of_reading from Panels where name='{panel_number}'"
+
+    try:
+
+        cursor.execute(sql)
+
+        res = cursor.fetchall()[0]
+
+        data = {
+            "data": res
+        }
+
+        headers = {"Access-Control-Allow-Origin":  "*"}
+        
+        cursor.close()
+
+        return JSONResponse(content=data, headers=headers, status_code=200)
+    
+    except Exception as e:
+        headers = {"Access-Control-Allow-Origin": "*"}
+
+        data = {
+            "Error": str(e)
+        }
+        cursor.close()
+
+        return JSONResponse(content=data, headers=headers, status_code=400)
+
+
+
+
+
+@data_router.post("/panels/insertOne")
+async def updatePanel(payload: PanelPost, response: JSONResponse):
+
+    central_tz = pytz.timezone("US/Central")
+    current_date_and_time= datetime.now(central_tz)
+    current_time = current_date_and_time.strftime("%H:%M:%S")
+    timestamp = ""
+    if(current_date_and_time.day < 10):
+        timestamp = f"0{current_date_and_time.day} {months[current_date_and_time.month - 1]} {current_date_and_time.year} {current_time} CST"
+    else:
+        timestamp = f"{current_date_and_time.day} {months[current_date_and_time.month - 1]} {current_date_and_time.year} {current_time} CST"
+    
+
+    try:
+
+        cursor = mydb.cursor()
+
+        sql = f"update Panels set time_of_reading='{timestamp}',phase_number='{payload.phase_number}',amps='{payload.amps}',AB='{payload.ab}',latest_reading='{payload.latest_reading}',name_notes_detail='{payload.name_notes_detail}',kW_capacity='{payload.kW_capacity}',kW_reading='{payload.kW_reading}',percent_of_breaker='{payload.percent_of_breaker}' where name='{payload.panel_number}'"
+        
+
+        cursor.execute(sql)
+
+        mydb.commit()
+
+        
+
+        headers = {"Access-Control-Allow-Origin": "*"}
+
+        data = {
+            "Success": "true"
+        }
+
+        return JSONResponse(content=data, headers=headers, status_code=200)
+    
+    except Exception as e:
+
+        headers = {"Access-Control-Allow-Origin": "*"}
+
+        data = {
+            "Error": str(e)
+        }
+
+        return JSONResponse(content=data, headers=headers, status_code=400)
+        
+
+
+
+
+    
 
 
 

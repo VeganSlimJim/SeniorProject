@@ -22,5 +22,12 @@ create table ReportReadings(
 create table Panels(
     name varchar(255),
     time_of_reading varchar(255),
-    
+    phase_number varchar(255),
+    amps varchar(255),
+    AB varchar(255),
+    latest_reading varchar(255),
+    name_notes_detail varchar(255),
+    kW_capacity varchar(255),
+    kW_reading varchar(255),
+    percent_of_breaker varchar(255)
 );
