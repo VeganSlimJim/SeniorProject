@@ -71,6 +71,16 @@ export class DataService {
     return from(data);
   }
 
+  getAllPanels(): Observable<any> {
+    const data = axios
+      .get(`${vars.base_path}/api/v1/data/panels/get-all`)
+      .then(async (res) => {
+        return await res.data;
+      });
+
+    return from(data);
+  }
+
   getPanels(): Observable<any> {
     const data = axios
       .get(`${vars.base_path}/api/v1/data/panels/get`)

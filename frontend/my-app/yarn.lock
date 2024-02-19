@@ -3651,23 +3651,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-angular@npm:^30.2.1":
-  version: 30.2.1
-  resolution: "ag-grid-angular@npm:30.2.1"
+"ag-grid-angular@npm:^31.0.3":
+  version: 31.0.3
+  resolution: "ag-grid-angular@npm:31.0.3"
   dependencies:
+    ag-grid-community: "npm:~31.0.3"
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/common": ">= 12.0.0"
-    "@angular/core": ">= 12.0.0"
-    ag-grid-community: ~30.2.1
-  checksum: 075ff308773d6dfbee5d682b871a462eca2d4c6be3d3991e29e3993b341178c0b08d9a41ea84102d9d868e287a08311f06c589c2048c3bda0920890663f991fa
+    "@angular/common": ">= 14.0.0"
+    "@angular/core": ">= 14.0.0"
+  checksum: 91dde7f2e3fea060fbb26cedb8f0d7fc2f56ded9faa3e43f5be5cb15921e2e29af1522ef304670365d29f1d2e3c7d5db95a0dd45142a567d601607d8f5927356
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:^30.2.1":
-  version: 30.2.1
-  resolution: "ag-grid-community@npm:30.2.1"
-  checksum: 0eb89416e7dd1e253a1580ad2deb0a94612b21def187bf25ed615bf17c0d0b2e883ff844134937b944609541beba6beea96f70b06f3dfa26dd6b407fea538c8e
+"ag-grid-community@npm:^31.0.3, ag-grid-community@npm:~31.0.3":
+  version: 31.0.3
+  resolution: "ag-grid-community@npm:31.0.3"
+  checksum: 53aabfd3468377edc6f1fa1b4e539a76412356b5ddb6a140b05273fd081d963104017dea5d4322ff0ed38ba258944464d1216b59674918377f091800a9295f67
   languageName: node
   linkType: hard
 
@@ -7387,8 +7387,8 @@ __metadata:
     "@types/karma-coverage": "npm:^2"
     ag-charts-angular: "npm:^8.2.1"
     ag-charts-community: "npm:^8.2.1"
-    ag-grid-angular: "npm:^30.2.1"
-    ag-grid-community: "npm:^30.2.1"
+    ag-grid-angular: "npm:^31.0.3"
+    ag-grid-community: "npm:^31.0.3"
     axios: "npm:^1.6.2"
     bootstrap: "npm:^5.3.2"
     jasmine-core: "npm:^5.1.1"

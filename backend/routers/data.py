@@ -192,12 +192,39 @@ def getTestDataForReport(data_payload: ReportReading, token: str = Depends(oauth
     return JSONResponse(content=data, headers=headers,status_code=200)
 
 
+@data_router.get("/panels/get-all")
+async def getAllPanels(response: JSONResponse):
 
+    try:
+        cursor = mydb.cursor(dictionary=True)
+
+        sql = "select * from Panels"
+
+        cursor.execute(sql)
+
+        res = cursor.fetchall()
+        
+        headers = {"Access-Control-Allow-Origin":  "*"}
+        data = {
+            "data": res 
+        }
+        cursor.close()
+
+        return JSONResponse(content=data, headers=headers, status_code=200)
     
-@data_router.get("/")
-async def rootRoute(response: Response):
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    return {"message": "receieved"}
+    except Exception as e:
+        headers = {"Access-Control-Allow-Origin":  "*"}
+
+        data = {
+            "Error": str(e)
+        }
+        cursor.close()
+
+        return JSONResponse(content=data, headers=headers, status_code=400)
+
+        
+        
+
 
 @data_router.get("/panels/get")
 async def getPanels(response: JSONResponse):
