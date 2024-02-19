@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
 import { DataService } from 'src/app/services/data/data.service';
 import { CookieService } from 'ngx-cookie-service';
+import { AlertModule } from '@coreui/angular';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -35,6 +36,7 @@ interface Report {
     ReactiveFormsModule,
     MatInputModule,
     MatSelectModule,
+    AlertModule,
   ],
   templateUrl: './reporting.component.html',
   styleUrl: './reporting.component.css',
@@ -44,6 +46,7 @@ export class ReportingComponent {
   csvRows: Array<any>;
   phase: FormControl;
   lastEdited: string;
+  formSubmitSuccess: boolean;
 
   panel: any;
   isEditing: boolean = false;
@@ -65,6 +68,8 @@ export class ReportingComponent {
 
     this.panelList = [];
 
+    this.formSubmitSuccess = false;
+
     this.lastEdited = '';
 
     this.csvRows = [];
@@ -76,6 +81,10 @@ export class ReportingComponent {
       console.log(value);
       this.panelList = [].concat(...value['data']);
       console.log(this.panelList);
+    });
+
+    this.formDataService.getFormSubmitSucces().subscribe((value) => {
+      this.formSubmitSuccess = value;
     });
   }
 

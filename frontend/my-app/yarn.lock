@@ -1775,6 +1775,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@coreui/angular@npm:4":
+  version: 4.7.15
+  resolution: "@coreui/angular@npm:4.7.15"
+  dependencies:
+    "@popperjs/core": "npm:~2.11.6"
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/animations": ^17.0.0
+    "@angular/cdk": ^17.0.0
+    "@angular/common": ^17.0.0
+    "@angular/core": ^17.0.0
+    "@angular/router": ^17.0.0
+    rxjs: ^7.8.1
+  checksum: 79533fbf317faca85b2fd9ac2a0bef4ac87fa44e92af66764354a040ef034471c8803edc01af2906bad270f2e278254caa2c7e1a569496809fec055e7b640d94
+  languageName: node
+  linkType: hard
+
+"@coreui/coreui@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "@coreui/coreui@npm:4.3.2"
+  dependencies:
+    postcss-combine-duplicated-selectors: "npm:^10.0.3"
+  peerDependencies:
+    "@popperjs/core": ^2.11.6
+  checksum: 4b6f7e38a54650b27a2af2e492041e52ca7be334e63c073b2e1ce94783583c3973287b41960284a4259fb1934d2117ece2a3889817962566b542fbebdf67c970
+  languageName: node
+  linkType: hard
+
+"@coreui/icons-angular@npm:^4.7.14":
+  version: 4.7.14
+  resolution: "@coreui/icons-angular@npm:4.7.14"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/common": ^17.0.0
+    "@angular/core": ^17.0.0
+    "@angular/platform-browser": ^17.0.0
+    "@coreui/icons": ^2.1.0 || ^3.0.0
+  checksum: 9e4972ac8dab32e7cbf8449ce6f961a4907f66f947f18208299f337b393119c176ad8878e42875a3a19f4c9a5265560c6f9365cb97bf124b3e2ebba584889f81
+  languageName: node
+  linkType: hard
+
 "@discoveryjs/json-ext@npm:0.5.7":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
@@ -3068,6 +3110,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@popperjs/core@npm:^2.9.2, @popperjs/core@npm:~2.11.6":
+  version: 2.11.8
+  resolution: "@popperjs/core@npm:2.11.8"
+  checksum: 4681e682abc006d25eb380d0cf3efc7557043f53b6aea7a5057d0d1e7df849a00e281cd8ea79c902a35a414d7919621fc2ba293ecec05f413598e0b23d5a1e63
+  languageName: node
+  linkType: hard
+
 "@socket.io/component-emitter@npm:~3.1.0":
   version: 3.1.0
   resolution: "@socket.io/component-emitter@npm:3.1.0"
@@ -3091,6 +3140,15 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: eebedbca185ac3c39dd5992ef18d9e2a9f99e7f3c2f52f5561f90e9ed482c5d224c7962db95362712f580ed5713264e777a98d8f0bd8747f4eadf62937baed16
+  languageName: node
+  linkType: hard
+
+"@types/bootstrap@npm:^5":
+  version: 5.2.10
+  resolution: "@types/bootstrap@npm:5.2.10"
+  dependencies:
+    "@popperjs/core": "npm:^2.9.2"
+  checksum: 3e978855eb780df3907e8fe991371dc661c7a8c5b9852a10e33bcf6a909bc1481857aa8786d18b3aa828fb28660145fda0c8648265719e8a97a448b9f0158eae
   languageName: node
   linkType: hard
 
@@ -4026,6 +4084,15 @@ __metadata:
   version: 1.0.0
   resolution: "boolbase@npm:1.0.0"
   checksum: e4b53deb4f2b85c52be0e21a273f2045c7b6a6ea002b0e139c744cb6f95e9ec044439a52883b0d74dedd1ff3da55ed140cfdddfed7fb0cccbed373de5dce1bcf
+  languageName: node
+  linkType: hard
+
+"bootstrap@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "bootstrap@npm:5.3.2"
+  peerDependencies:
+    "@popperjs/core": ^2.11.8
+  checksum: 0c108d90cee90247db571f07a0fc3718beda58eed2ffed3f2f8ccff66b25a349830dfbeb5e55e6e6fe484fad96c4edb19cb4c5fa5a68b771b2e0f3c400e42dda
   languageName: node
   linkType: hard
 
@@ -7310,6 +7377,10 @@ __metadata:
     "@angular/platform-browser": "npm:^17.0.3"
     "@angular/platform-browser-dynamic": "npm:^17.0.3"
     "@angular/router": "npm:^17.0.3"
+    "@coreui/angular": "npm:4"
+    "@coreui/coreui": "npm:^4.3.2"
+    "@coreui/icons-angular": "npm:^4.7.14"
+    "@types/bootstrap": "npm:^5"
     "@types/jasmine": "npm:^5.1.2"
     "@types/karma": "npm:^6"
     "@types/karma-chrome-launcher": "npm:^3"
@@ -7319,6 +7390,7 @@ __metadata:
     ag-grid-angular: "npm:^30.2.1"
     ag-grid-community: "npm:^30.2.1"
     axios: "npm:^1.6.2"
+    bootstrap: "npm:^5.3.2"
     jasmine-core: "npm:^5.1.1"
     karma: "npm:^6.4.2"
     karma-chrome-launcher: "npm:^3.2.0"
@@ -7854,6 +7926,17 @@ __metadata:
     async: "npm:^2.6.0"
     is-number-like: "npm:^1.0.3"
   checksum: d61af2143af13b27be0be767f40a34801e203d811c81c637828e6b07f78e667f175df276832638eeefb4ecf88aad78777061cea101fdae15f2f1c4939a6bc14a
+  languageName: node
+  linkType: hard
+
+"postcss-combine-duplicated-selectors@npm:^10.0.3":
+  version: 10.0.3
+  resolution: "postcss-combine-duplicated-selectors@npm:10.0.3"
+  dependencies:
+    postcss-selector-parser: "npm:^6.0.4"
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 5dba611597653e0ef3fbeb0988e90bc897c53aa1f918c733e57404d572f4557a45c1de3a346c3296537f2603f6e24ed380fcb708a37f36dc1461a52a9bd9e403
   languageName: node
   linkType: hard
 

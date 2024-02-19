@@ -77,6 +77,7 @@ export class FormEditComponent {
         this.formPanel = this.cookieService.get('panelNumber');
       }
     });
+    this.formDataService.setFormSubmitSuccess(false);
   }
 
   onCancelClick() {
@@ -88,7 +89,10 @@ export class FormEditComponent {
     console.log(this.formEditData);
 
     this.dataService.postPanel(this.formEditData).subscribe((value) => {
-      console.log(value);
+      if ('Success' in value) {
+        this.formDataService.setFormSubmitSuccess(true);
+        this.router.navigate(['/reporting']);
+      }
     });
   }
 }
