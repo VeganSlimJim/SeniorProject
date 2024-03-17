@@ -9,7 +9,8 @@ create table Users(
     email varchar (255),
     first_name varchar(255),
     last_name varchar(255),
-    creation_date varchar(255)
+    creation_date varchar(255),
+    user_role varchar(255)
 );
 
 create table ReportReadings(

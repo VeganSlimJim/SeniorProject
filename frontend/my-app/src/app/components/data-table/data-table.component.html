@@ -1,8 +1,14 @@
-<h1>Table View</h1>
+<h1 style="font-size: xx-large; margin-top: 5px">Table View</h1>
+<div style="margin: 10px 0">
+  <button (click)="onBtnExport()">Download to CSV</button>
+</div>
 <ag-grid-angular
   [rowData]="rows"
   [columnDefs]="colDefs"
   class="ag-theme-quartz"
   style="height: 500px"
+  [suppressExcelExport]="true"
+  (gridReady)="onGridReady($event)"
+  [pagination]="true"
 >
 </ag-grid-angular>

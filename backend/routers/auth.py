@@ -37,6 +37,8 @@ def login(user: UserLogin):
     
     # get the hashed pw from the database
     hashed_pw = res[0][1]
+    user_role = res[0][6]
+    print("im here")
 
 
     if(verify_password(user.password, hashed_pw)):
@@ -49,7 +51,8 @@ def login(user: UserLogin):
         token = jwt.encode(payload=payload, key=JWT_SECRET, algorithm=JWT_ALGORITHM)    
         
         data = {
-            "token": token
+            "token": token,
+            "user_role": user_role
         }
         headers = {"Access-Control-Allow-Origin": "*"}
         return JSONResponse(content=data, headers=headers, status_code=200)

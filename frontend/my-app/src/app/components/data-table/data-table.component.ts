@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AgGridAngular } from 'ag-grid-angular';
 import { DataService } from 'src/app/services/data/data.service';
 import { ChangeDetectorRef } from '@angular/core';
@@ -27,19 +27,7 @@ interface RowData {
 export class DataTableComponent {
   rows: Array<RowData> = [];
 
-  // rowData = [
-  //   { make: 'Tesla', model: 'Model Y', price: 64950, electric: true },
-  //   { make: 'Ford', model: 'F-Series', price: 33850, electric: false },
-  //   { make: 'Toyota', model: 'Corolla', price: 29600, electric: false },
-  // ];
-
-  // Column Definitions: Defines & controls grid columns.
-  // colDefs1: ColDef[] = [
-  //   { field: 'make' },
-  //   { field: 'model' },
-  //   { field: 'price' },
-  //   { field: 'electric' },
-  // ];
+  private gridApi!: GridApi;
 
   colDefs: ColDef[] = [
     { field: 'name' },
@@ -65,5 +53,13 @@ export class DataTableComponent {
 
       this.rows = retrievedRows;
     });
+  }
+
+  onBtnExport() {
+    this.gridApi.exportDataAsCsv();
+  }
+
+  onGridReady(params: GridReadyEvent) {
+    this.gridApi = params.api;
   }
 }

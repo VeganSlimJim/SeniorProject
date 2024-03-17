@@ -22,6 +22,7 @@ import { RouterService } from '../../services/router/router.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 interface Token {
   token: string;
+  user_role: string;
 }
 
 export class MyErroStateMatcher implements ErrorStateMatcher {
@@ -80,6 +81,7 @@ export class LoginpageComponent {
         try {
           this.invalidLogin = false;
           this.cookieService.set('token', value.token);
+          this.authService.setCurrUserRole(value.user_role);
           this.router.navigate(['/dashboard']);
         } catch (error) {
           this.invalidLogin = true;

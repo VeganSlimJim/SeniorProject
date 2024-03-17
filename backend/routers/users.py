@@ -135,7 +135,7 @@ def update_user(user: UpdatedUser):
 
         # hash the password again
         hashed_pw = encrypt_password(user.password)
-        update_sql = f"update Users set first_name='{user.first_name}',last_name='{user.last_name}',password='{hashed_pw}',email='{user.email}' where user_id='{user_id}'"
+        update_sql = f"update Users set first_name='{user.first_name}',last_name='{user.last_name}',password='{hashed_pw}',email='{user.email}', user_role='{user.user_role}' where user_id='{user_id}'"
         cursor.execute(update_sql)
         mydb.commit()
         data = {"Success!": "Record successfully updated"}
