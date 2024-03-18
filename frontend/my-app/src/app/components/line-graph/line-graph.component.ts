@@ -113,7 +113,7 @@ export class LineGraphComponent {
     if (!this.cookieValue) {
       this.router.navigate(['/login']);
     }
-    // this.startUpdates();
+    this.startUpdates();
   }
 
   update = () => {
@@ -136,14 +136,12 @@ export class LineGraphComponent {
       this.tempData.shift();
     }
 
-    // this.dataService.getDataFromPLC(this.cookieValue)
-    //   .subscribe(value =>{
-    //     this.tempData.push({
-    //       time: new Date(value.timestamp),
-    //       current: value.value,
-
-    //     })
-    //   })
+    this.dataService.getDataFromPLC(this.cookieValue).subscribe((value) => {
+      this.tempData.push({
+        time: new Date(value.timestamp),
+        current: value.value,
+      });
+    });
 
     return this.tempData;
   }
