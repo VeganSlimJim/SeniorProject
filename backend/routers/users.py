@@ -59,8 +59,8 @@ def create_user(user: User, response: JSONResponse):
     user.creation_date = timestamp
 
     hashed_pw = encrypt_password(user.password)
-    record = (user.user_id, hashed_pw, user.email, user.first_name, user.last_name, user.creation_date)
-    sql = "insert into Users (user_id, password, email, first_name, last_name, creation_date) values (%s,%s,%s,%s,%s,%s)"
+    record = (user.user_id, hashed_pw, user.email, user.first_name, user.last_name, user.creation_date, user.user_role)
+    sql = "insert into Users (user_id, password, email, first_name, last_name, creation_date, user_role) values (%s,%s,%s,%s,%s,%s,%s)"
     cursor.execute(sql, record)
     mydb.commit()
 

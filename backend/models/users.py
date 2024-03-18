@@ -7,6 +7,7 @@ class User(BaseModel):
     email: str
     first_name: str
     last_name: str
+    user_role: str
     creation_date: Optional[str] = Field(None, alias="creation_date")
 
 class DeletedUser(BaseModel):

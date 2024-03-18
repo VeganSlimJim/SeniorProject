@@ -71,6 +71,21 @@
           >User Portal</a
         >
       </li>
+      <li
+        style="
+          list-style: none;
+          font-size: larger;
+          padding: 12px 24px;
+          transition: background-color 0.3s ease;
+        "
+      >
+        <a
+          style="text-decoration: none; color: #333"
+          class="sidenav-link"
+          (click)="toggleStatus(); signOut()"
+          >Sign Out</a
+        >
+      </li>
     </ul>
   </mat-sidenav>
   <mat-sidenav-content>

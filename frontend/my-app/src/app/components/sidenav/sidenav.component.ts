@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { SidenavStatusService } from '../../services/sidenav-status/sidenav-status.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
@@ -35,7 +36,8 @@ export class SidenavComponent implements OnChanges {
     private sideNavStatusService: SidenavStatusService,
     private elementRef: ElementRef,
     private cookieService: CookieService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.userRole = '';
   }
@@ -48,10 +50,16 @@ export class SidenavComponent implements OnChanges {
   ngOnInit() {
     console.log('im initializing the sidenav');
 
-    this.authService.getCurrUserRole().subscribe((value) => {
-      this.userRole = value;
+    const token = this.cookieService.get('token');
+
+    this.authService.decodeToken(token).subscribe((value) => {
+      this.userRole = value.user_role;
+
       if (this.userRole === 'ADMIN') {
         this.showUserFunctions = true;
+        console.log('im here');
+      } else {
+        this.showUserFunctions = false;
       }
     });
   }
@@ -75,5 +83,10 @@ export class SidenavComponent implements OnChanges {
       });
       this.sideNavStatusService.setSideNavStatus(!this.currval);
     }
+  }
+
+  signOut() {
+    this.cookieService.delete('token');
+    this.router.navigate(['/login']);
   }
 }

@@ -44,4 +44,27 @@ export class AuthService {
 
     return from(data);
   }
+
+  decodeToken(token: String): Observable<any> {
+    const payload = {
+      token: token,
+    };
+
+    const data = axios
+      .post(`${vars.base_path}/api/v1/auth/token-decode`, payload)
+      .then(async (res) => {
+        if (res.status !== 200) {
+          console.log('nah');
+          return null;
+        }
+
+        return await res.data;
+      })
+      .catch((error) => {
+        console.log('errored out');
+        return null;
+      });
+
+    return from(data);
+  }
 }

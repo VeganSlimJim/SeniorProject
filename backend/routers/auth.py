@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 import mysql.connector
 from models.auth import UserLogin
+from models.tokens import JWTTOKEN
 from functions.encryption import encrypt_password, verify_password
 import jwt
 JWT_SECRET='a42d46793ee7d56a31745ae170021cb48f1034932d6cc30f289c655451438b27'
@@ -46,13 +47,14 @@ def login(user: UserLogin):
         # if theres a verify then the user is the same lul
         user_id = res[0][0]
         payload = {
-            "user_id": user_id
+            "user_id": user_id,
+            "user_role": user_role
         }
+        print(payload)
         token = jwt.encode(payload=payload, key=JWT_SECRET, algorithm=JWT_ALGORITHM)    
         
         data = {
             "token": token,
-            "user_role": user_role
         }
         headers = {"Access-Control-Allow-Origin": "*"}
         return JSONResponse(content=data, headers=headers, status_code=200)
@@ -63,7 +65,32 @@ def login(user: UserLogin):
         headers = {"Access-Control-Allow-Origin" : "*"}
         return JSONResponse(content=data, headers=headers, status_code=401)
 
-            
+@auth_router.post("/token-decode")
+def decode_token(token: JWTTOKEN):
+    
+    print(token.token)
+    try:
+        decoded_jwt = jwt.decode(token.token, key=JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        print(decoded_jwt)
+        user_role = decoded_jwt["user_role"]
+        user_id = decoded_jwt["user_id"]
+
+        
+
+        data = {
+            "user_id": user_id,
+            "user_role": user_role,
+        }
+        headers = {"Access-Control-Allow-Origin": "*"}
+        return JSONResponse(content=data, headers=headers, status_code=200)
+    
+    except Exception as e:
+        print(e)
+        data = {
+            "Error": str(e)
+        }
+        headers = {"Access-Control-Allow-Origin": "*"}
+        return JSONResponse(content=data, headers=headers, status_code=500)
 
 
 

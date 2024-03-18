@@ -4,6 +4,8 @@ import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AgGridAngular } from 'ag-grid-angular';
 import { DataService } from 'src/app/services/data/data.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 interface RowData {
   name: string;
@@ -28,6 +30,7 @@ export class DataTableComponent {
   rows: Array<RowData> = [];
 
   private gridApi!: GridApi;
+  public cookieValue: string;
 
   colDefs: ColDef[] = [
     { field: 'name' },
@@ -44,14 +47,23 @@ export class DataTableComponent {
 
   constructor(
     private dataService: DataService,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    private cookieService: CookieService,
+    private router: Router
+  ) {
+    this.cookieValue = '';
+  }
 
   ngOnInit() {
     this.dataService.getAllPanels().subscribe((value) => {
       const retrievedRows = value.data;
 
       this.rows = retrievedRows;
+      this.cookieValue = this.cookieService.get('token');
+      console.log(this.cookieValue);
+      if (!this.cookieValue) {
+        this.router.navigate(['/login']);
+      }
     });
   }
 

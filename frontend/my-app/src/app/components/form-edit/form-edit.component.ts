@@ -48,6 +48,7 @@ export default interface FormEdit {
 export class FormEditComponent {
   formPanel: string;
   formEditData: FormEdit;
+  cookieValue: string;
 
   constructor(
     private formDataService: FormDataService,
@@ -56,6 +57,7 @@ export class FormEditComponent {
     private dataService: DataService
   ) {
     this.formPanel = '';
+    this.cookieValue = '';
 
     this.formEditData = {
       panel_number: '',
@@ -78,6 +80,13 @@ export class FormEditComponent {
       }
     });
     this.formDataService.setFormSubmitSuccess(false);
+
+    //cookie check block
+    this.cookieValue = this.cookieService.get('token');
+    console.log(this.cookieValue);
+    if (!this.cookieValue) {
+      this.router.navigate(['/login']);
+    }
   }
 
   onCancelClick() {
